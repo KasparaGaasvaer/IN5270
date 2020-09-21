@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-#Check stability with something other than c?
-
 
 class Wave2D():
     def __init__(self, b, T, Lx, Ly, I, V, qq, Nx, Ny, f):
@@ -169,12 +167,12 @@ class Wave2D():
     def plot(self, X_ax, Y_ax , title):
         """ Plots final solution in the X,Y-plane """
 
-        plt.contourf(self.X,self.Y, self.u[1:self.Nx+1,1:self.Ny+1])
+        plt.contourf(self.X.T,self.Y.T, self.u[1:self.Nx+1,1:self.Ny+1])
         plt.title(title)
         plt.xlabel(X_ax)
         plt.ylabel(Y_ax)
         plt.colorbar()
-        plt.show()
+        plt.figure()
 
 
 

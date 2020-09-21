@@ -176,7 +176,7 @@ if task == "3.3":
 
 if task == "3.4":
 
-    T = 0.1
+    T = 1
     Lx = 1
     Ly = 1
     g = 9.81
@@ -215,7 +215,6 @@ if task == "3.4":
         return g*BigH
 
 
-
     def I(x,y):
         return I0 + Ia*np.exp(-((x-Im)/Is)**2)
 
@@ -230,8 +229,12 @@ if task == "3.4":
     Nx = n
     Ny = n
 
-    my_solver = Wave2D(b, T, Lx, Ly, I, V,Gaussian_2D, Nx, Ny, f)
-    my_solver.set_initial_conditions()
-    my_solver.time_evolution()
-    my_solver.plot("X", "Y", " 2D Gaussian hill")
+    T = [0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01]
+
+    for t in T:
+        my_solver = Wave2D(b, t, Lx, Ly, I, V,Gaussian_2D, Nx, Ny, f)
+        my_solver.set_initial_conditions()
+        my_solver.time_evolution()
+        my_solver.plot("X", "Y", " 2D Gaussian hill for T = %f" % t)
+
     plt.show()
