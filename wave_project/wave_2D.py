@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 
 class Wave2D():
     def __init__(self, b, T, Lx, Ly, I, V, qq, Nx, Ny, f):
-        """ Initializing class variables  """
-
+        """ Initializing class variables and functions  """
 
         self.b = b
         self.Nx = Nx
@@ -72,7 +71,7 @@ class Wave2D():
     def updating_ghost_cells(self,uu):
         """ Method for updating ghost cells """
 
-        """
+
         for i in range(1, self.Nx +1):
             uu[i,0] = uu[i,2]
             uu[i,self.Ny+1] = uu[i,self.Ny-1]
@@ -87,12 +86,12 @@ class Wave2D():
         uu[1:-1,self.Ny+1] = uu[1:-1,self.Ny-1]
         uu[0,1:-1] = uu[2,1:-1]
         uu[self.Nx+1,1:-1] = uu[self.Nx-1,1:-1]
-
+        """
     def make_q(self):
         """ Fills a matrix with values from the q(x,y) function """
         self.q = np.zeros((self.Nx+2,self.Ny+2))
 
-        """
+
         for i in range(1, self.Nx+1):
             for j in range(1, self.Ny+1):
                 self.q[i,j] = self.qq(self.x[i-1], self.y[j-1])
@@ -113,7 +112,7 @@ class Wave2D():
         self.q[1:-1, self.Ny +1] = 2*self.q[1:-1, self.Ny] - self.q[1:-1, self.Ny-1]
         self.q[0, 1:-1] = 2*self.q[1, 1:-1] - self.q[2, 1:-1]
         self.q[self.Nx+1, 1:-1] = 2*self.q[self.Nx, 1:-1] - self.q[self.Nx-1, 1:-1]
-
+        """
         self.stability()
 
     def first_step(self):
@@ -123,7 +122,7 @@ class Wave2D():
         q = self.q
         u_old = self.u_old
 
-        """
+
         for i in range(1, self.Nx+1):
             for j in range(1, self.Ny+1):
 
@@ -131,7 +130,7 @@ class Wave2D():
         """
 
         self.u[1:-1,1:-1] = u_old[1:-1,1:-1] + (1/(2*self.E))*(self.Cx*((q[1:-1,1:-1] + q[2:,1:-1]) * (u_old[2:,1:-1] - u_old[1:-1,1:-1]) - (q[1:-1,1:-1] + q[0:-2,1:-1]) * (u_old[1:-1,1:-1] - u_old[0:-2,1:-1])) + self.Cy*((q[1:-1,1:-1] + q[1:-1,2:]) * (u_old[1:-1,2:] - u_old[1:-1,1:-1]) - (q[1:-1,1:-1] + q[1:-1,0:-2]) * (u_old[1:-1,1:-1] - u_old[1:-1,0:-2])) + 2*self.dt*self.V(self.X, self.Y)*(self.E - self.B) + self.f(self.X, self.Y,0))
-
+        """
         self.updating_ghost_cells(self.u)
 
     def advance_general_scheme(self):
@@ -139,7 +138,7 @@ class Wave2D():
 
         q = self.q
         u = self.u
-        """
+
         for i in range(1, self.Nx+1):
             for j in range(1, self.Ny+1):
 
@@ -147,7 +146,7 @@ class Wave2D():
         """
 
         self.u_new[1:-1,1:-1] = (1/(self.E+self.B))*(self.Cx*((q[1:-1,1:-1] + q[2:,1:-1])*(u[2:,1:-1] - u[1:-1,1:-1]) - (q[1:-1,1:-1] + q[0:-2,1:-1]) * (u[1:-1,1:-1] - u[0:-2,1:-1])) + self.Cy*((q[1:-1,1:-1] + q[1:-1,2:]) * (u[1:-1,2:] - u[1:-1,1:-1]) - (q[1:-1,1:-1] + q[1:-1,0:-2]) * (u[1:-1,1:-1] - u[1:-1,0:-2])) + 2*self.E*u[1:-1,1:-1] - (self.E - self.B) * self.u_old[1:-1,1:-1] + self.f(self.X, self.Y, self.t))
-
+        """
         self.updating_ghost_cells(self.u_new)
 
     def swap(self):
@@ -155,8 +154,7 @@ class Wave2D():
         self.u_old, self.u, self.u_new = self.u, self.u_new, self.u_old
 
     def time_evolution(self):
-        """ Method for progressing the time evolution of the solution.
-            Also calls method to calculate true error from analytical solution"""
+        """ Method for progressing the time evolution of the solution. """
 
         self.t = self.dt
         while self.t <= self.T:
@@ -165,7 +163,7 @@ class Wave2D():
             self.t += self.dt
 
     def plot(self, X_ax, Y_ax , title):
-        """ Plots final solution in the X,Y-plane """
+        """ Plots final solution in the X,Y-plane with amplitude of wave as contour"""
 
         plt.contourf(self.X.T,self.Y.T, self.u[1:self.Nx+1,1:self.Ny+1])
         plt.title(title)
@@ -178,6 +176,7 @@ class Wave2D():
 
 
     def true_error(self,analytical):
+        """ Calculates the linf norm"""
 
         analytical_values = np.zeros([self.Nx,self.Ny])
         analytic = lambda x,y,t: analytical(x,y,t)
