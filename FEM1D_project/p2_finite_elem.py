@@ -12,7 +12,7 @@ class FiniteElementSolverP2():
         self.C = C
         self.D = D
         self.f = lambda x: f(x)
-        self.tol = 10e-3
+        self.tol = 10e-4
         self.x = sym.Symbol("x")
 
         self.h = 1/(2*self.Ne)
