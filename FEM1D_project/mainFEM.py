@@ -47,3 +47,4 @@ else:
     Ne = int(Ne)
     my_solver = FiniteElementSolverP2(f, Ne, C, D, analytical, n)
     my_solver.automatic_results()
+    print("L2-norm = %.16f" %(my_solver.L2))

@@ -6,9 +6,10 @@ class FiniteElementSolverP2():
     def __init__(self, f, N_elements, C, D, analytical, grid_points):
         """ Initialize class variables and matrices/vectors of size according to number of elements"""
 
-        self.gp = grid_points
+
 
         self.Ne = N_elements
+        self.gp = grid_points
         self.C = C
         self.D = D
         self.f = lambda x: f(x)
@@ -235,9 +236,10 @@ class FiniteElementSolverP2():
         self.find_coefficients()
         self.calculate_numerical_solution()
         self.plot_solution()
+        self.L2_norm()
 
     def L2_norm(self):
         """Calculates the L2-norm of the error."""
         analyticals = self.analytical(self.x_values, self.C, self.D)
         error = analyticals - self.numerical
-        self.L2 = np.sum(error**2)
+        self.L2 = np.sqrt((1/self.gp)*np.sum(error**2))
