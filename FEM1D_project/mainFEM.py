@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from p2_finite_elem import FiniteElementSolverP2
 import sys
+from time import time
 
 Ne = sys.argv[1]
 
@@ -34,6 +35,7 @@ if Ne == "L2":
     L2s = np.array(L2s)
 
     h = 1/Ne_list
+    print(h)
 
 
     r = []
@@ -45,6 +47,10 @@ if Ne == "L2":
 else:
 
     Ne = int(Ne)
+    start = time()
     my_solver = FiniteElementSolverP2(f, Ne, C, D, analytical, n)
     my_solver.automatic_results()
+    end = time()
+    timeused = end - start
+    print("Time used = ", timeused)
     print("L2-norm = %.16f" %(my_solver.L2))

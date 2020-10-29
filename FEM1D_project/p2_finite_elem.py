@@ -195,11 +195,20 @@ class FiniteElementSolverP2():
         """ Calculates the approximated solution u(x) over entire grid."""
 
         self.u = np.vectorize(self.u)
-        temp = 0
         self.numerical = np.zeros(self.gp)   #Store value of u(x) in each gridpoint
 
+
+        #Calculate special case of element 0
+        L = 0
+        R = 2*self.h
+        end = np.where((np.abs(self.x_values - R)<=self.tol))[0][0]
+        end += 1
+        x = self.x_values[L:end]
+        self.numerical[L:end] = self.u(x,0,0)
+        temp = 1    #Starts as 1 since the 0th element is calculated outside the loop
+
         #Calculate value of u(x) in each element.
-        for i in range(0,2*self.Ne,2):
+        for i in range(2,2*self.Ne,2):
 
             L = i* self.h
             R = L + 2*self.h
@@ -209,8 +218,7 @@ class FiniteElementSolverP2():
             end = np.where((np.abs(self.x_values - R)<=self.tol))[0][0]
 
             #We want to find L < X <= R, except from first element where we want to include L=0.
-            if i != 0:
-                start += 1
+            start += 1
             end += 1
             x = self.x_values[start:end]
             self.numerical[start:end] = self.u(x,i,temp)
