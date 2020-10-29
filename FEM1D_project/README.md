@@ -8,6 +8,7 @@ In this the outer folder of this directory you will encounter two files:
 
 * mainFEM.py
 * p2_finite_elem.py
+
 In the folder named "Report" you encounter two more files:
 * FEM1D_project.ipynb
 * FEM1d_project.pdf
