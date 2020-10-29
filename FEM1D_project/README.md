@@ -13,7 +13,7 @@ In the folder named "Report" you encounter two more files:
 * FEM1D_project.ipynb
 * FEM1d_project.pdf
 
-The Jupyter-notebook file contains a report summarizing the work done and the main results of the project, while the PDF files is just a the nootebook converted to PDF. All the code produced is also available in the notebook, so strictly speaking the two python files in this directory are redundant. They are included for readability and reproducibility purposes.
+The Jupyter-notebook file contains a report summarizing the work done and the main results of the project, while the PDF files is just a the notebook converted to PDF. All the code produced is also available in the notebook, so strictly speaking the two python files in this directory are redundant. They are included for readability and reproducibility purposes.
 
 The p2_finite_elem.py file contains the implemented class solver and the mainFEM.py file is used to test the implemented solver for different number of elements and boundary conditions.
 
